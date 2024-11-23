@@ -13,4 +13,17 @@ model Member {
   email          String   @unique
   phone          String   @unique
   membershipDate DateTime @default(now())
+
+  @@map("members")
+}
+
+model Book {
+  bookId          String @id @default(uuid())
+  title           String
+  genre           String
+  publishedYear   Int
+  totalCopies     Int
+  availableCopies Int
+
+  @@map("books")
 }

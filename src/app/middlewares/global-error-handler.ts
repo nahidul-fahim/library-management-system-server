@@ -13,17 +13,18 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
         message = 'Validation Error';
         error = err.message
     }
-    else if (err instanceof Prisma.PrismaClientValidationError) {
+    else if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === 'P2002') {
-            message = "Duplicate Key error";
-            error = err.meta;
+            statusCode = StatusCodes.CONFLICT;
+            message = "Already exists";
         }
     }
 
     res.status(statusCode).json({
         success,
+        status: statusCode,
         message,
-        error
+        // error
     })
 };
 

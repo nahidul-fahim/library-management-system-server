@@ -15,7 +15,7 @@ router.get("/", MemberController.getAllMembers);
 
 router.get("/:memberId", MemberController.getSingleMember);
 
-router.put("/:memberId", MemberController.updateMember);
+router.put("/:memberId", validateRequest(MemberValidation.updateMember), MemberController.updateMember);
 
 router.delete("/:memberId", MemberController.deleteMember);
 

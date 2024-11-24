@@ -25,6 +25,28 @@ const createMember = z.object({
     })
 });
 
+
+const updateMember = z.object({
+    body: z.object({
+        name: z.string({
+            invalid_type_error: "Name must be a string"
+        }).min(1, { message: "Name cannot be empty" }).optional(),
+
+        email: z.string({
+            invalid_type_error: "Email must be a string"
+        }).email({ message: "Invalid email format" }).optional(),
+
+        phone: z.string({
+            invalid_type_error: "Phone number must be a string"
+        }).min(1, { message: "Phone number cannot be empty" }).optional(),
+
+        membershipDate: z.string({
+            invalid_type_error: "Membership date must be a valid date"
+        }).optional()
+    })
+});
+
 export const MemberValidation = {
     createMember,
+    updateMember
 };

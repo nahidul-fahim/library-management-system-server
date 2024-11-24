@@ -1,10 +1,11 @@
 import { PrismaClient } from "@prisma/client";
+import { IMember } from "./member.interface";
 
 
 const prisma = new PrismaClient();
 
 // create member
-const createNewMemberIntoDb = async (data: any) => {
+const createNewMemberIntoDb = async (data: IMember) => {
     const result = await prisma.member.create({ data })
     return result;
 };
@@ -26,7 +27,7 @@ const getSingleMemberFromDb = async (id: string) => {
 };
 
 // update a member
-const updateMemberIntoDb = async (id: string, data: any) => {
+const updateMemberIntoDb = async (id: string, data: Partial<IMember>) => {
     const result = await prisma.member.update({
         where: {
             memberId: id

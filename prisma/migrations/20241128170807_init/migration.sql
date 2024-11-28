@@ -33,22 +33,13 @@ CREATE TABLE "borrowRecords" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "members_memberId_key" ON "members"("memberId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "members_email_key" ON "members"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "members_phone_key" ON "members"("phone");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "books_bookId_key" ON "books"("bookId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "borrowRecords_bookId_key" ON "borrowRecords"("bookId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "borrowRecords_memberId_key" ON "borrowRecords"("memberId");
+CREATE UNIQUE INDEX "borrowRecords_bookId_memberId_borrowDate_key" ON "borrowRecords"("bookId", "memberId", "borrowDate");
 
 -- AddForeignKey
 ALTER TABLE "borrowRecords" ADD CONSTRAINT "borrowRecords_bookId_fkey" FOREIGN KEY ("bookId") REFERENCES "books"("bookId") ON DELETE RESTRICT ON UPDATE CASCADE;

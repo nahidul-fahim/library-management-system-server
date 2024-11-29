@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { IBorrowRecord } from "./borrowRecord.interface";
+import CustomError from "../../../error/custom-error";
 
 const prisma = new PrismaClient();
 
@@ -21,11 +22,10 @@ const borrowBook = async ({ memberId, bookId }: IBorrowRecord) => {
   });
 
   if (!member) {
-    throw new Error("Member not found");
+    throw new CustomError(404, "Member not found");
   }
-
   if (!isBookAvailable || isBookAvailable.availableCopies <= 0) {
-    throw new Error("Book is not available");
+    throw new CustomError(404, "Book is not available for borrowing");
   }
 
   const borrowDate = new Date().toISOString();
@@ -64,7 +64,7 @@ const returnBook = async ({ borrowId }: Partial<IBorrowRecord>) => {
     }
   });
   if (!isBorrowRecordExist) {
-    throw new Error("Borrow record not found");
+    throw new CustomError(404, "Borrow record not found");
   };
 
   const returnDate = new Date().toISOString();

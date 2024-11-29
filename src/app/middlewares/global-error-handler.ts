@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { NextFunction, Request, Response } from "express"
 import { StatusCodes } from 'http-status-codes';
+import CustomError from "../../error/custom-error";
 
 const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
 
@@ -18,6 +19,10 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
             statusCode = StatusCodes.CONFLICT;
             message = "Already exists";
         }
+    }
+    else if (err instanceof CustomError){
+        statusCode = err.statusCode;
+        message = err.message;
     }
 
     res.status(statusCode).json({

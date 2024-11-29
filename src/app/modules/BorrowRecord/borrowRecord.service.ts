@@ -3,6 +3,7 @@ import { IBorrowRecord } from "./borrowRecord.interface";
 
 const prisma = new PrismaClient();
 
+// borrow a book
 const borrowBook = async ({ memberId, bookId }: IBorrowRecord) => {
   const isBookAvailable = await prisma.book.findUnique({
     where: {
@@ -54,6 +55,7 @@ const borrowBook = async ({ memberId, bookId }: IBorrowRecord) => {
   return result;
 };
 
+// return a book
 const returnBook = async ({ borrowId }: Partial<IBorrowRecord>) => {
   const isBorrowRecordExist = await prisma.borrowRecord.findUnique({
     where: {
@@ -91,8 +93,34 @@ const returnBook = async ({ borrowId }: Partial<IBorrowRecord>) => {
   return result;
 }
 
+// get all overdue
+const getAllOverdueFromDb = async () => {
+  const unreturnedBorrowList = await prisma.borrowRecord.findMany({
+    where: { returnDate: null },
+    include: { book: true, member: true }
+  });
+
+  const overdueRecords = unreturnedBorrowList.map((record) => {
+    const borrowDate = record.borrowDate;
+    const today = new Date();
+    const overdueDays = Math.ceil((today.getTime() - borrowDate.getTime()) / (1000 * 60 * 60 * 24));
+    if (overdueDays > 14) {
+      return {
+        borrowId: record.borrowId,
+        bookTitle: record.book.title,
+        borrowerName: record.member.name,
+        overdueDays
+      }
+    }
+    return null;
+  })
+    .filter((record) => record !== null);
+  return overdueRecords;
+};
+
 
 export const BorrowRecordService = {
   borrowBook,
-  returnBook
+  returnBook,
+  getAllOverdueFromDb
 };

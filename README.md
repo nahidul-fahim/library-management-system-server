@@ -4,7 +4,7 @@
 The Library Management System API is designed to help library staff and members manage books, memberships, and borrowing activities. It provides CRUD operations for books, members, and borrow records, with additional endpoints for borrowing and returning books. UUIDs are used for unique identification in all tables.
 
 ## Live URL
-[Link to the live deployment of your backend]
+[Library Management Server](https://library-management-server-a8.vercel.app)
 
 ## Technology Stack & Packages
 - **Prisma ORM**: For database schema and interactions
@@ -28,7 +28,6 @@ The Library Management System API is designed to help library staff and members 
   - Add the following variables
     ```bash
       DATABASE_URL=your_postgresql_connection_string
-      PORT=your_preferred_port
     ```
 4. **Initialize the database**:
    ```bash

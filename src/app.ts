@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("PH healthcare is running!");
+    res.send("Library Management System is running!");
 })
 
 app.use('/api', router);

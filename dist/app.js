@@ -12,7 +12,7 @@ app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
-    res.send("PH healthcare is running!");
+    res.send("Library Management System is running!");
 });
 app.use('/api', routes_1.default);
 app.use(global_error_handler_1.default);
